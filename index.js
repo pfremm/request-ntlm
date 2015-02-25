@@ -5,51 +5,56 @@ var KeepAlive = require('agentkeepalive');
 var _ = require('lodash');
 
 var makeRequest = function(method, options, params, callback) {
-  
-  if (options.url.toLowerCase().indexOf('https://') === 0) {
-    KeepAlive = KeepAlive.HttpsAgent;
-  }
 
-  var keepaliveAgent = new KeepAlive();
+    if (options.url.toLowerCase().indexOf('https://') === 0) {
+        KeepAlive = KeepAlive.HttpsAgent;
+    }
 
-  if (!options.workstation) options.workstation = '';
-  if (!options.ntlm_domain) options.ntlm_domain = '';
-  if (!options.headers) options.headers = {};
+    var keepaliveAgent = new KeepAlive();
 
-  function startAuth($) {
-    var type1msg = ntlm.createType1Message(options);
-    options.method = method;
-    _.extend(options.headers, {
-      'Connection': 'keep-alive',
-      'Authorization': type1msg
-    });
-    options.agent = keepaliveAgent;
-    request(options, $);
-  }
+    if (!options.workstation) options.workstation = '';
+    if (!options.ntlm_domain) options.ntlm_domain = '';
+    if (!options.headers) options.headers = {};
+    if (!options.contentType)  {
+        options.contentType = 'application/json';
 
-  function requestComplete(res, body, $) {
-    if (!res.headers['www-authenticate'])
-      return $(new Error('www-authenticate not found on response of second request'));
+    }
+    //console.log("content type is:" + options.contentType);
+    function startAuth($) {
+        var type1msg = ntlm.createType1Message(options);
+        options.method = method;
+        _.extend(options.headers, {
+            'Connection': 'keep-alive',
+            'Authorization': type1msg
+        });
+        options.agent = keepaliveAgent;
+        request(options, $);
+    }
 
-    var type2msg = ntlm.parseType2Message(res.headers['www-authenticate']);
-    var type3msg = ntlm.createType3Message(type2msg, options);
-    options.method = method;
-    _.extend(options.headers, {
-      'Connection': 'keep-alive',
-      'Authorization': type3msg
-    });
+    function requestComplete(res, body, $) {
+        if (!res.headers['www-authenticate'])
+            return $(new Error('www-authenticate not found on response of second request'));
 
-    options.agent = keepaliveAgent;
+        var type2msg = ntlm.parseType2Message(res.headers['www-authenticate']);
+        var type3msg = ntlm.createType3Message(type2msg, options);
+        options.method = method;
+        _.extend(options.headers, {
+            'Connection': 'keep-alive',
+            'Authorization': type3msg,
+            'Content-Type': options.contentType //Need to add options to specify this header 
+        });
 
-    if (typeof params == "string")
-      options.body = params;
-    else
-      options.json = params;
+        options.agent = keepaliveAgent;
 
-    request(options, $);
-  }
+        if (typeof params == "string")
+            options.body = params;
+        else
+            options.json = params;
 
-  async.waterfall([startAuth, requestComplete], callback);
+        request(options, $);
+    }
+
+    async.waterfall([startAuth, requestComplete], callback);
 };
 
 exports.get = _.partial(makeRequest, 'get');

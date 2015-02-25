@@ -3,22 +3,55 @@
   "version": "0.1.1",
   "description": "NTLM auth for NodeJS - continued from Colyn Brown's project",
   "main": "index.js",
-  "repository": "https://github.com/FrankyBoy/request-ntlm",
-  "contributors": [{
-    "name": "Colyn Brown",
-    "email": "clbrown@godaddy.com"
-  },{
-    "name": "Immanuel Hayden",
-    "email": "immanuel.hayden@gmail.com"
-  },{
-    "name": "Brett Profitt",
-    "email": "brett.profitt@gmail.com"
-  }],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FrankyBoy/request-ntlm"
+  },
+  "contributors": [
+    {
+      "name": "Colyn Brown",
+      "email": "clbrown@godaddy.com"
+    },
+    {
+      "name": "Immanuel Hayden",
+      "email": "immanuel.hayden@gmail.com"
+    },
+    {
+      "name": "Brett Profitt",
+      "email": "brett.profitt@gmail.com"
+    }
+  ],
   "license": "ISC",
   "dependencies": {
-    "agentkeepalive": "^0.2.2",
+    "agentkeepalive": "^1.2.0",
     "async": "^0.7.0",
     "lodash": "^2.4.1",
     "request": "^2.34.0"
-  }
+  },
+  "gitHead": "df2f4dae302d61ff995a51918cc5d52c6269a0e7",
+  "bugs": {
+    "url": "https://github.com/FrankyBoy/request-ntlm/issues"
+  },
+  "homepage": "https://github.com/FrankyBoy/request-ntlm",
+  "_id": "request-ntlm-continued@0.1.1",
+  "scripts": {},
+  "_shasum": "91380e6b77c9f73cd94e356c551efa322b65feaa",
+  "_from": "request-ntlm-continued@*",
+  "_npmVersion": "1.4.26",
+  "_npmUser": {
+    "name": "ihayden",
+    "email": "immanuel.hayden@gmail.com"
+  },
+  "maintainers": [
+    {
+      "name": "ihayden",
+      "email": "immanuel.hayden@gmail.com"
+    }
+  ],
+  "dist": {
+    "shasum": "91380e6b77c9f73cd94e356c551efa322b65feaa",
+    "tarball": "http://registry.npmjs.org/request-ntlm-continued/-/request-ntlm-continued-0.1.1.tgz"
+  },
+  "directories": {},
+  "_resolved": "http://registry.npmjs.org/request-ntlm-continued/-/request-ntlm-continued-0.1.1.tgz"
 }
