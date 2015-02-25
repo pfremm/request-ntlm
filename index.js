@@ -1,14 +1,14 @@
 var async = require('async');
 var request = require('request');
 var ntlm = require('./lib/ntlm');
-var KeepAlive = require('agentkeepalive');
+var KeepAlive = require('agentkeepalive').HttpsAgent;
 var _ = require('lodash');
 
 var makeRequest = function(method, options, params, callback) {
 
-    if (options.url.toLowerCase().indexOf('https://') === 0) {
+   /* if (options.url.toLowerCase().indexOf('https://') === 0) {
         KeepAlive = KeepAlive.HttpsAgent;
-    }
+    }*/
 
     var keepaliveAgent = new KeepAlive();
 
